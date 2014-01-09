@@ -21,8 +21,9 @@
 
 			//Width and height
 			var w = 500;
-			var h = 100;
+			var h = 100; // this time just set as plain JS variables for later reference
 			
+			// Heres a nicely indented JS array of points and radii (is that the plural of radius?)
 			var dataset = [
 							{
 								x: 5,
@@ -79,22 +80,26 @@
 			//Create SVG element
 			var svg = d3.select("body")
 						.append("svg")
-						.attr("width", w)
+						.attr("width", w) // width and height from above
 						.attr("height", h);
 
-			svg.selectAll("circle")
-			   .data(dataset)
-			   .enter()
-			   .append("circle")
+			svg.selectAll("circle") // SVG elements behave much the same as html elements, here we make an empty selection of circles
+			   .data(dataset) // bind the dataset above, this will make a whole bunch of circles
+			   .enter() // enter the loop, right?
+			   .append("circle") // append a circle element for each 'row'
 			   .attr("cx", function(d) {
-					return d.x;
+			   	console.log(d); // I added this line to track what was happening in the JS console in Safari
+					return d.x; // So attribute cx of this circle is going to == the x value from the current row
 			   })
-			   .attr("cy", function(d) {
+			   .attr("cy", function(d) { // a circle has to have centre x and centre y coodrs
 				   return d.y;
 			   })
-			   .attr("r", function(d) {
+			   .attr("r", function(d) { // now for the radius
 				   return d.r;
 			   });
+			   // So this is the excercise where I stepped out and had chicken and roast veg infront of Star Trek, but basically you can add a color item to each row of the above dataset like: color: "cyan",
+			   // .attr("fill" function(d) { return d.color; });
+			   // this line when uncommented will set the attribute fill of each circle to the colour in d.color (dont forget to remove the semicolon after .attr("r", ..); above)
 			
 		</script>
 	</body>

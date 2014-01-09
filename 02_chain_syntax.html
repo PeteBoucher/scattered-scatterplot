@@ -9,6 +9,18 @@
 		<script type="text/javascript">
 
 			d3.select("body").append("p").text("New paragraph!");
+			// append() method adds a child element inside the selectied element
+			// Chain methods to avoid creating a variable to hold your selected element
+			// text() method sets the content of the most recent element in the method chain (returned by append())
+
+			d3.select("body").append("h1").text("Muahahahahahah!");
+			// D3 dosen't only work with <p> elements!
+
+			// This is the syntax commonly used in D3, each method in the chain gets a newline but all this is a single JS expression:
+			d3.select("body")
+				.append("h2") // Append a heading as the last child of <body>
+				.style("color", "pink") // Style it
+				.text("Less evil"); // Give it content
 			
 		</script>
 	</body>

@@ -14,11 +14,12 @@
 
 			var numbers = [ 5, 10, 15, 20, 25 ];
 			
-			d3.select("body").selectAll("h3")
-				.data(numbers)
-				.enter()
-				.append("h3")
-				.text(function(d) { return d; });
+			// OK this is where things get freaky!
+			d3.select("body").selectAll("h3") // We select all <h3> elements in the DOM (even though none exist yet)
+				.data(numbers) // we BIND an array of 5 elements to the empty selection (this will create 5 <h3> tags later)
+				.enter() // we're going to 'enter' new elements? (I'm not sure about this)
+				.append("h3") // and we append an <h3> tag for EACH array element (D3 has a for loop in the background)
+				.text(function(d) { return d; }); // and we add this text to EACH created <h3> tag, I know this looks odd but you need an anonymous function to access the current array element: d == 5 for the first <h3>, 10 for the second, etc.
 
 
 
@@ -27,18 +28,21 @@
 			//
 
 			var animals = [ 
-				{ animal: "cat", type: "mammal" },
+				{ animal: "cat", type: "mammal" }, // this time each element is a JS object, lets call them 'rows'
 				{ animal: "snake", type: "reptile" },
 				{ animal: "warbler", type: "bird" }
 			];
 			
-			d3.select("body").selectAll("p")
-				.data(animals)
-				.enter()
-				.append("p")
+			// Lets go over that again..
+			d3.select("body").selectAll("p") // An empty selection of paragraphs this time
+				.data(animals) // you can bind anything using data() as long as it's an array
+				.enter() // we're entering new stuff or entering the loop? basically anything after this becomes part of the for loop interating through the dataset we bound
+				.append("p") // each array element will cause a paragraph to be appended
 				.text(function(d) {
 					return "A " + d.animal + " is a " + d.type;
-				});
+				}); // now within our anonimous function we're doing some formatting. d represents the entire data row, so d.animal == the string "cat" on first iteration and d.type == the string "mammal"
+
+				//Load this file in the browser and play with the datasets and formmating to "feel the awesome power of D3" (in Darth Vader voice)
 			
 		</script>
 	</body>

@@ -21,10 +21,11 @@
 			
 			//Create SVG element
 			var svg = d3.select("body")
-						.append("svg")
-						.attr("width", 500)
-						.attr("height", 200);
+						.append("svg") // here we add the <svg> tag via JS and give it a variable name in scope for future manipulation
+						.attr("width", 500) // and give it width and height in the layout for rendering
+						.attr("height", 600);
 
+			// How to draw a line with D3
 			svg.append("line")
 				.attr("x1", 10)
 				.attr("y1", 10)
@@ -41,21 +42,21 @@
 				.attr("stroke", "orange")
 				.attr("stroke-width", 2);
 
-			svg.append("rect")
+			svg.append("rect") // draw a rectangle
 				.attr("x", 200)
 				.attr("y", 10)
 				.attr("width", 100)
 				.attr("height", 100)
 				.attr("fill", "salmon");
 
-			svg.append("circle")
-				.attr("cx", 300)
-				.attr("cy", 140)
-				.attr("r", 50)
+			svg.append("circle") // draw a circle
+				.attr("cx", 100)
+				.attr("cy", 100)
+				.attr("r", 150)
 				.attr("fill", "magenta");
 
-			svg.append("text")
-				.attr("x", 250)
+			svg.append("text") // add text
+				.attr("x", 50)
 				.attr("y", 100)
 				.attr("fill", "charcoal")
 				.attr("font-size", 36)

@@ -14,13 +14,14 @@
 				background-color: white;
 			}
 			
+			/* Some extra CSS styles here that apply to svg elements */
 			.axis path,
 			.axis line {
 				fill: none;
 				stroke: black;
 				shape-rendering: crispEdges;
 			}
-			
+			/* Nice right? */
 			.axis text {
 				font-family: sans-serif;
 				font-size: 11px;
@@ -34,8 +35,11 @@
 			//Width and height
 			var w = 500;
 			var h = 300;
-			var padding = 40;
+			var padding = 40; // were going to make some room around our visulaisation for labeled axies
 			
+			// OK for this demo theres a bit of JS to create a random dataset of points
+			// We know it's not ok to play with random data in real applications
+
 			//Dynamic, random dataset
 			var dataset = [];											//Initialize empty array
 			var numDataPoints = 50;										//Number of dummy data points to create
@@ -48,24 +52,26 @@
 
 			//Create scale functions
 			var xScale = d3.scale.linear()
-								 .domain([0, d3.max(dataset, function(d) { return d[0]; })])
-								 .range([padding, w - padding]);
+								 .domain([0, d3.max(dataset, function(d) { return d[0]; })]) // our DOMAIN dataset range
+								 .range([padding, w - padding]); // our x scale RANGE is going to start 40 pixels in and end 40 short of the width
 
 			var yScale = d3.scale.linear()
 								 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
 								 .range([h - padding, padding]);
+								 // same for y and height
 
 			//Define X axis
-			var xAxis = d3.svg.axis()
-							  .scale(xScale)
-							  .orient("bottom")
-							  .ticks(5);
+			var xAxis = d3.svg.axis() // this will display a nice x axis
+							  .scale(xScale) // using the x scale we set above
+							  .orient("bottom") // and it's going to go along the bottom of the chart as every good x axis should
+							  .ticks(5); // we'll sugest to D3 that the axis should have 5 tick marks with labels, but D3 likes round numbers so it might snap to 4 or 7 ticks
 
 			//Define Y axis
 			var yAxis = d3.svg.axis()
 							  .scale(yScale)
 							  .orient("left")
 							  .ticks(5);
+							  // Same for the vertical y axis
 
 			//Create SVG element
 			var svg = d3.select("body")
@@ -74,31 +80,34 @@
 						.attr("height", h);
 
 			//Create circles
-			svg.append("g")
-			   .attr("id", "circles")
-			   .selectAll("circle")
-			   .data(dataset)
+			svg.append("g") // a <g> tag in svg represents a group of elements
+			   .attr("id", "circles") // a group can have an id
+
+			   .selectAll("circle") // as before we make a selection of non-existant elements
+			   .data(dataset) // bind our random data
 			   .enter()
-			   .append("circle")
+			   .append("circle") // and add a spot for each datapoint
 			   .attr("cx", function(d) {
-					return xScale(d[0]);
+					return xScale(d[0]); // d[0] == d.x from before
 			   })
 			   .attr("cy", function(d) {
 					return yScale(d[1]);
 			   })
-			   .attr("r", 2);
+			   .attr("r", 2); // were making them all 2 pixel spots
 			
 			//Create X axis
-			svg.append("g")
+			svg.append("g") // were going to put the x axis into another group
 				.attr("class", "x axis")
-				.attr("transform", "translate(0," + (h - padding + 5) + ")")
-				.call(xAxis);
+				.attr("transform", "translate(0," + (h - padding + 5) + ")")// we didn't really go into this in the webinar (running short on time) but this is a way of moving the group around the svg
+				.call(xAxis); // go and generate the x axis using the settings above (line 64)
 			
 			//Create Y axis
 			svg.append("g")
-				.attr("class", "y axis")
+				.attr("class", "y axis") // groups can also have a class (you might need to style more than one vertical axis)
 				.attr("transform", "translate(" + (padding - 5) + ",0)")
-				.call(yAxis);
+				.call(yAxis); 
+
+				// Again open in the browser to see the result, hit refresh to generate new random data and see the axies change
 
 		</script>
 	</body>

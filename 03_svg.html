@@ -5,9 +5,9 @@
 		<title>D3: SVG</title>
 		<script type="text/javascript" src="d3.v3.js"></script>
 		<style type="text/css">
-			
+			/* Some styles so we can see the rendered SVG */
 			body {
-				background-color: gray;
+				background-color: gray; 
 			}
 
 			svg {
@@ -17,13 +17,20 @@
 		</style>
 	</head>
 	<body>
-
-		<svg width="500" height="200">
+		<!-- SVG (Scaled Vector Graphics) image format is written like html wheras most common web image formats are stored as binaries -->
+		<svg width="500" height="200"> 
+			<!-- <svg> tag embeds an image in the page and can be used in any html5 document -->
 			<line x1="10" y1="10" x2="190" y2="190" stroke="teal" stroke-width="2" />
+			<!-- a line element draws a line from coordinate x1,y1 to x2,y2 
+			N.B. all number values in SVG are assumed to be in pixels -->
 			<line x1="190" y1="190" x2="400" y2="0" stroke="orange" stroke-width="2" />
+			<!-- the SVG 0,0 origin is in the top left corner, other attributes style the line -->
 			<rect x="200" y="10" width="100" height="100" fill="salmon" />
+			<!-- draws a rectangle with top left corner at x,y with width and height, fill and optional stroke colours -->
 			<circle cx="300" cy="140" r="50" fill="magenta" />
+			<!-- draws a circle with CENTER at cx,cy and radius of r -->
 			<text x="250" y="100" fill="charcoal" font-size="36" font-weight="bold">Lorem ipsum</text>
+			<!-- Adds a line of text to the image, text will not wrap or flow like HTML so use with care, set text colour with fill= intead of color= -->
 		</svg>
 
 		<script type="text/javascript">

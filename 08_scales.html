@@ -20,8 +20,8 @@
 		<script type="text/javascript">
 
 			//Width and height
-			var w = 500;
-			var h = 100;
+			var w = 600;
+			var h = 200;
 			
 			var dataset = [
 							{
@@ -77,38 +77,49 @@
 						  ];
 	
 			//Define scale functions
-			var xScale = d3.scale.linear()
-								 .domain([0, d3.max(dataset, function(d) { return d.x; })])
-								 .range([0, w]);
+			var xScale = d3.scale.linear() // D3 has methods fro working with scales (linear, log, ordinal, etc.)
+								 .domain([0, d3.max(dataset, function(d) { return d.x; })]) // the DOMAIN scale is the scale of your data in this case from 0 to the maximum value of x in our dataset == 480?
+								 .range([0, w]); // the RANGE scale is the size of your presentation in this case from 0 to w == 600 pixels
+								 // d3 can now translate datapoints to pixels for us so we dont need an svg 20k pixels high to chart the population of local towns, for example
 
 			var yScale = d3.scale.linear()
 								 .domain([0, d3.max(dataset, function(d) { return d.y; })])
 								 .range([0, h]);
+								 // Same for the y axis
+
+								// the variables xScale and yScale are now functions that do this scaling for us..
 
 			//Create SVG element
 			var svg = d3.select("body")
 						.append("svg")
 						.attr("width", w)
-						.attr("height", h);
+						.attr("height", h); // same as before
 
 			svg.selectAll("circle")
 			   .data(dataset)
 			   .enter()
 			   .append("circle")
 			   .attr("cx", w / 2)
-			   .attr("cy", h / 2)
-			   .attr("r", 1)
-			   .transition()
-			   .duration(2000)
-			   .attr("cx", function(d, i) {
-					return xScale(d.x);
+			   .attr("cy", h / 2) // give each cirle an initial position in the middle of the svg
+			   .attr("r", 1) // and a radius of 1
+
+			   .transition() // create an animation
+			   .duration(2000) // lasting 2 seconds
+
+			   // everything after here is the end state of the animation
+			   .attr("cx", function(d, i) { // set centre x for each circle
+			   // N.B: i represents the array index or iteration that we're on, I'm not sure why it's used here
+					return xScale(d.x); // Heres were the magic happens, take d.x and convert it to our x axis scale for attribute cx
 			   })
 			   .attr("r", function(d) {
-				   return d.r;
+				   return d.r; // set radius normally
 			   })
 			   .attr("cy", function(d) {
-				   return yScale(d.y);
+				   return yScale(d.y); // scale cy proportionally to our y axis scale
 			   });
+
+			   // Load in the browser and refresh to see what hapens
+			   // Now imagine the client wants to change the height of the chart, scroll up and change values h or w, you dont need to touch the data to make the animation cover the whole svg
 			
 		</script>
 	</body>
